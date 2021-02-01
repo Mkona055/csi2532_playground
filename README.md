@@ -1,6 +1,10 @@
 # Laboratoire 3
 ## Pratique des diagrammes ER
 
+| Nom              | Numéro d'étudiant | Email               |
+| ---------------- | ----------------- | ------------------- |
+| Mohamed Konate   | 300136750         | mkona055@uottawa.ca |
+
 #### Exercice 1
 
 ![ERDiagram1](assets/er_01.png)
