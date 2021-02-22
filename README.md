@@ -42,15 +42,15 @@ Pour chaque situation voici un diagramme ER qui le décrit (en supposant qu'aucu
 
 3. Chaque professeur enseigne exactement un cours (ni plus, ni moins).
 
-   ![RelationnalDiagram2](assets/modeleER_02.png)
+![RelationnalDiagram2](assets/modeleER_02.png)
 
 5. Les professeurs peuvent enseigner le même cours sur plusieurs semestres et chaque doit être enregistrée.
 
-   ![RelationnalDiagram3](assets/modeleER_03.png)
+![RelationnalDiagram3](assets/modeleER_03.png)
 
 6. Supposons maintenant que certains cours puissent être enseignés conjointement par une équipe de professeurs, mais il est possible qu'aucun professeur dans une équipe ne puisse enseigner le cours. Modélisez cette situation en introduisant des ensembles d'entités et des ensembles de relations supplémentaires si nécessaire.
 
-   ![RelationnalDiagram4](assets/modeleER_04.png)
+![RelationnalDiagram4](assets/modeleER_04.png)
 
 ## Schéma de relation
 
