@@ -1,0 +1,92 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: athletes; Type: TABLE; Schema: public; Owner: Soma
+--
+
+CREATE TABLE public.athletes (
+    id integer NOT NULL,
+    identifier character varying(50),
+    created timestamp without time zone,
+    modified timestamp without time zone,
+    name character varying(50),
+    dob date,
+    gender character varying(6)
+);
+
+
+ALTER TABLE public.athletes OWNER TO "Soma";
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: Soma
+--
+
+CREATE TABLE public.schema_migrations (
+    migration character varying(255) NOT NULL,
+    migrated_at time without time zone
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO "Soma";
+
+--
+-- Data for Name: athletes; Type: TABLE DATA; Schema: public; Owner: Soma
+--
+
+COPY public.athletes (id, identifier, created, modified, name, dob, gender) FROM stdin;
+1       \N      \N      \N      Andrew  1986-12-01      m
+2       \N      \N      \N      Ayana   1998-06-11      F
+3       \N      \N      \N      Hayden  1996-07-24      m
+4       \N      \N      \N      August  1999-09-09      m
+\.
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: Soma
+--
+
+COPY public.schema_migrations (migration, migrated_at) FROM stdin;
+20200228145526-create-athletes.sql      14:55:26
+20200228145900-create-migrations.sql    14:59:00
+\.
+
+
+--
+-- Name: athletes athletes_pkey; Type: CONSTRAINT; Schema: public; Owner: Soma
+--
+
+ALTER TABLE ONLY public.athletes
+    ADD CONSTRAINT athletes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: Soma
+--
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (migration);
+
+
+--
+-- PostgreSQL database dump complete
+--
