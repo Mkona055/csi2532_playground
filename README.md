@@ -1,122 +1,129 @@
-# Leader Board
+# Lab 6-MORESQL
 
-## Outline
 
-| Outline | Value |
-| --- | --- |
-| Course | CSI 2532 |
-| Date | Winter 2021 |
-| Professor | Andrew Forward, aforward@uottawa.ca |
-| TA | Kalonji Kalala, hkalo081@uottawa.ca |
-| TA | Lintian Wang, lwang263@uottawa.ca |
-| Team | Mohamed Konate |
 
-## Deliverables
+| Nom            | Numéro d'étudiant | Email               |
+| -------------- | ----------------- | ------------------- |
+| Mohamed Konate | 300136750         | mkona055@uottawa.ca |
 
-### Deliverable 1 (5%) Hello World
+1. Lister les name et birthplace de tous les artists
 
-| Mark | Description | Comment |
-| --- | --- | --- |
-| 2.0 | GitHub repository setup | [GitHub Repo](https://github.com/professor-forward/leaderboard) |
-| 2.5 | ER model  | See below |
-| 2.5 | Relational model / SQL schema | Both image and SQL below |
-| 1.0 | SQL examples to INSERT, UPDATE, SELECT and DELETE data | See examples below |
-| 1.0 | README.md contains all required information | See _this_ page |
-| 1.0 | Git usage (commit messages, all students involved) | See [commit details in GitHub](https://github.com/professor-forward/leaderboard/commits/main) |
-| / 10 | |
+   ```sql
+   select name, birthplace from artists;
+   
+     name     |  birthplace
+   --------------+---------------
+    Caravaggio   | Milan
+    Picasso      | Malaga
+    Leonardo     | Florence
+    Michelangelo | Arezzo
+    Josefa       | Seville
+    Hans Hofmann | Weisenburg
+    John         | San Francisco
+   (7 lignes)
+   ```
 
-## Application Description
+2. Lister le title et le price de toutes les artworks après 1600.
 
-The leaderboard database models an athlete, including
-details such as their name, date of birth, and identified gender.
+   ```sql
+   select title, price from artworks where year > 1600;
+   
+         title      |  price
+   -----------------+----------
+    Three Musicians | 11000.00
+   (1 ligne)
+   ```
 
-## ER Model
+3. Lister le title et le type de toutes les artworks qui ont été peintes en
+   2000 ou peintes par Picasso.
 
-The ER diagram was created with [Lucidchart](/lucidchart.md).
+   ```sql
+   select title, type from artworks where year = 2000 or artist_name = 'Picasso';
+   
+         title      |  type
+   -----------------+--------
+    Three Musicians | Modern
+   (1 ligne)
+   ```
 
-![ER Model](assets/ErModel.png)
+   
 
-## Relational Model
+4. Lister les name et birthplace de tous les artists nés entre 1880 et 1930
 
-The Relational Model (diagram) was also created with [Lucidchart](/lucidchart.md).
+   ```sql
+   select name, birthplace from artists
+   group by name, birthplace
+   having extract(year from dateofbirth) between 1880 and 1930;
+   
+     name   |  birthplace
+   ---------+---------------
+    John    | San Francisco
+    Picasso | Malaga
+   (2 lignes)
+   ```
 
-![ER Model](assets/RelationalModel.png)
+5. Lister les name et le country de naissance de tous les artists dont le
+   style de peinture est Modern, Baroque or Renaissance. (ASTUCE:
+   utilisez le mot-clé IN).
 
-## SQL Schema
+   ```sql
+   select name, country from artists where style in ('Modern','Baroque','Renaissance');
+   
+        name     | country
+   --------------+---------
+    Caravaggio   |
+    Leonardo     | Italy
+    Michelangelo | Italy
+    Josefa       | Spain
+    Hans Hofmann | Germany
+    John         | USA
+   (6 lignes)
+   ```
 
-This was tested using [Online SQL Interpreter](https://www.db-book.com/db7/university-lab-dir/sqljs.html)
-available with the [textbook](https://www.db-book.com/db7/index.html).
 
-```sql
-CREATE TABLE athletes (
-  id int,
-  identifier varchar(50),
-  created timestamp,
-  modified timestamp,
-  name varchar(50),
-  dob date,
-  gender varchar(6),
-  PRIMARY KEY (id)
-);
-CREATE TABLE schema_migrations (
-migration varchar(255),
-migrated_at time,
-PRIMARY KEY (migration)
-);
-```
 
-## Example SQL Queries
+6. Lister tous les détails des artworks dans la base de données, triés
+   par title
 
-After running the above schema, you can test the queries below in the [Online SQL Interpreter](https://www.db-book.com/db7/university-lab-dir/sqljs.html)
-Refresh the browser if you want to start over.
+   ```sql
+   select * from artworks order by title;
+   
+         title      | year |  type   |  price   | artist_name
+   -----------------+------+---------+----------+-------------
+    The Cardsharps  | 1594 | Baroque | 40000.00 | Caravaggio
+    Three Musicians | 1921 | Modern  | 11000.00 | Picasso
+   (2 lignes)
+   ```
 
-```sql
-INSERT INTO athletes (id, name, gender, dob)
-VALUES
-(1, 'Andrew', 'm', '1986-12-01'),
-(2, 'Ayana', 'F', '1998-06-11'),
-(3, 'Hayden', 'm', '1996-07-24'),
-(4, 'August', 'm', '1999-09-09');
+   
 
-INSERT INTO schema_migrations (migration, migrated_at) VALUES
-('20200228145526-create-athletes.sql', '2020-02-28 14:55:26');
-INSERT INTO schema_migrations (migration, migrated_at) VALUES
-('20200228145900-create-migrations.sql', '2020-02-28 14:59:00');
-```
+7. Lister les name et les customer ids de tous les customers qui aiment Picasso.
 
-Let's find all 'F' athletes.
+   ```sql
+   select customers.name, customers.id from likeartists
+   join customers on customers.id = likeartists.customer_id
+   where artist_name = 'Picasso';
+   
+    name  | id
+   -------+----
+    Emre  |  4
+    Saeid |  5
+   (2 lignes)
+   ```
 
-```sql
-SELECT *
-FROM athletes
-WHERE gender = 'F';
-```
+8. Lister les name de tous les customers qui aiment les artistes de style Renaissance et dont le amount
+   est supérieur à 30000.
 
-Let's update all 'm's to 'M's.
+   ```sql
+   select customers.name from likeartists
+   join customers on customers.id = likeartists.customer_id
+   join artists on likeartists.artist_name = artists.name
+   where artists.style = 'Renaissance' and customers.amount > 30000;
+   
+    name
+   -------
+    Saeid
+   (1 ligne)
+   ```
 
-```sql
-UPDATE athletes
-SET gender = 'M'
-WHERE gender = 'm';
-```
-
-And now all 'M' athletes.
-
-```sql
-SELECT *
-FROM athletes
-WHERE gender = 'M';
-```
-
-Let's delete all athletes.
-
-```sql
-DELETE FROM athletes;
-```
-
-And now the table is empty.
-
-```sql
-SELECT count(*)
-FROM athletes;
-```
+   

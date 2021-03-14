@@ -1,28 +1,32 @@
-
-INSERT INTO department
-  (dept_name, building, budget)
+INSERT INTO customers
+(id, name, address, amount,rating)
 VALUES
-  ('Biology', 'Watson', 90000),
-  ('Comp. Sci.', 'Taylor', 100000),
-  ('Elec. Eng.', 'Taylor', 85000),
-  ('Finance', 'Painter', 120000),
-  ('History', 'Painter', 50000),
-  ('Music', 'Packard', 80000),
-  ('Physics', 'Watson', 70000);
+(1, 'John', 'Ottawa', 8.5),
+(2, 'Amy', 'Orleans', 9.0),
+(3, 'Peter', 'Gatineau', 6.3),
+(4, 'Emre', 'Preston', 20000.00, 5),
+(5, 'Saeid', null, 40000.00, 6);
 
-INSERT INTO course
-  (course_id, title, dept_name, credits)
+INSERT INTO artists
+(name, birthplace, style, dateofbirth, country)
 VALUES
-  ('BIO-101', 'Intro. to Biology', 'Biology', 4),
-  ('BIO-301', 'Genetics', 'Biology', 4),
-  ('BIO-399', 'Computational Biology', 'Biology', 3),
-  ('CS-101', 'Intro. to Computer Science', 'Comp. Sci.', 4),
-  ('CS-190', 'Game Design', 'Comp. Sci.', 4),
-  ('CS-315', 'Robotics', 'Comp. Sci.', 3),
-  ('CS-319', 'Image Processing', 'Comp. Sci.', 3),
-  ('CS-347', 'Database System Concepts', 'Comp. Sci.', 3),
-  ('EE-181', 'Intro. to Digital Systems', 'Elec. Eng.', 3),
-  ('FIN-201', 'Investment Banking', 'Finance', 3),
-  ('HIS-351', 'World History', 'History', 3),
-  ('MU-199', 'Music Video Production', 'Music', 3),
-  ('PHY-101', 'Physical Principles', 'Physics', 4);
+('Caravaggio', 'Milan', 'Baroque', '1571-09-28' ),
+('Picasso', 'Malaga', 'Cubism', '1881-10-25'),
+('Leonardo', 'Florence', 'Renaissance', '1452-04-15', 'Italy'),
+('Michelangelo', 'Arezzo', 'Renaissance', '1475-03-06', 'Italy'),
+('Josefa', 'Seville', 'Baroque', '1630-09-09', 'Spain'),
+('Hans Hofmann', 'Weisenburg', 'Modern', '1966-02-17', 'Germany'),
+('John', 'San Francisco', 'Modern', '1920-02-17', 'USA');
+
+INSERT INTO artworks
+(title, year, type, price, artist_name)
+VALUES
+('The Cardsharps', 1594, 'Baroque', 40000.00, 'Caravaggio'),
+('Three Musicians', 1921, 'Modern', 11000.00, 'Picasso');
+
+INSERT INTO likeartists
+(customer_id, artist_name)
+VALUES
+(4, 'Picasso'),
+(5, 'Picasso'),
+(5, 'Leonardo');
