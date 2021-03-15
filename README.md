@@ -111,19 +111,19 @@
    (2 lignes)
    ```
 
-8. Lister les name de tous les customers qui aiment les artistes de style Renaissance et dont le amount
+8. Lister les name de tous les customers qui aiment les artistes de style Renaissance et dont le price
    est supérieur à 30000.
 
    ```sql
    select customers.name from likeartists
-   join customers on customers.id = likeartists.customer_id
-   join artists on likeartists.artist_name = artists.name
-   where artists.style = 'Renaissance' and customers.amount > 30000;
+   JOIN customers on customer_id = customers.id
+   JOIN artists on artist_name = artists.name
+   NATURAL JOIN artworks
+   WHERE style = 'Renaissance' AND price >30000;
    
     name
-   -------
-    Saeid
-   (1 ligne)
+   ------
+   (0 ligne)
    ```
 
    
